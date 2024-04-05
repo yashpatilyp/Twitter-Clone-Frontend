@@ -1,18 +1,20 @@
 import React from "react";
-import Main from "./components/Main/Main";
-import NavBarLeft from "./components/NavBarLeft/NavBarLeft";
-import Right from "./components/Right/Right";
+import './Pages/profile/profile.css'
+
 import "./App.css";
+import "./Pages/home.css";
+import './Components/home/WhoToFollow/whotofollow.css'
+import {Toaster} from 'react-hot-toast'
+
+import Body from "./Components/home/Body";
 
 const App = () => {
   return (
-    <div id="container">
-      <div id="fixed">
-        <NavBarLeft />
-      </div>
-      <Main />
-      <Right />
-    </div>
+   
+      <div className="App">
+       <Body/>
+       <Toaster/>
+        </div>
   );
 };
 

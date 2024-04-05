@@ -1,0 +1,222 @@
+.home-container {
+  display: flex;
+}
+
+/* // sidebar ........................................  */
+.sidebar_container {
+  /* border: 2px solid white; */
+  position: sticky;
+  top: 0;
+  height: 100vh; /* Adjust height as needed */
+  overflow-y: auto; /* Add scrollbar if content overflows */
+}
+.sidebar-padding {
+  padding: 10px;
+}
+
+.nav-pills li a:hover {
+  background-color: rgba(41, 41, 41, 0.885);
+}
+.nav-pills span {
+  border-radius: 0px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+/* // Feed ...................................................   */
+
+.feed-container {
+  /* border: 2px solid #0DB8DE; */
+}
+
+/* // create Post ..................................          */
+
+.btn-createpost {
+  padding: 5px;
+  background-color: rgb(23, 22, 22);
+  margin-top: 15px;
+  text-align: center;
+  font-size: 18px;
+  letter-spacing: 2px;
+  margin-top: 15px;
+  font-weight: 500;
+  color: #ecf0f5;
+  border: none;
+}
+.btn-createpost:hover {
+  background-color: rgb(47, 40, 40);
+}
+
+.picture-btn {
+  display: flex;
+  justify-content: space-between; /* This will push the elements to opposite ends */
+}
+
+.picture-btn div {
+  /* You may want to add additional styling here */
+}
+
+.picture-btn div:first-child {
+  float: left;
+}
+
+.picture-btn div:last-child {
+  float: right;
+}
+
+.post-btn {
+  padding: 5px 15px;
+  background-color: #1d9bf0;
+  color: white;
+  border-radius: 50px;
+  border: none;
+}
+  p{
+  color: white;
+}
+h5{
+  color: white;
+  font-size: 16px;
+}
+
+.tweet-comp{
+  display: flex;
+ flex-direction: column;
+}
+
+.icons-tweet{
+  display: flex;
+  justify-content: space-between;
+  margin-left: 60px;
+  margin-right: 10px;
+}
+.comment{
+
+text-align: center;
+border-radius: 100%;
+justify-content: center;
+align-items: center;
+padding:3px 5px;
+cursor: pointer;
+}
+.heart{
+  text-align: center;
+border-radius: 100%;
+justify-content: center;
+align-items: center;
+padding:3px 5px;
+cursor: pointer;
+}
+.bookmark{
+  text-align: center;
+border-radius: 100%;
+justify-content: center;
+align-items: center;
+padding:3px 5px;
+cursor: pointer;
+}
+.delete{
+  text-align: center;
+border-radius: 100%;
+justify-content: center;
+align-items: center;
+padding:3px 5px;
+cursor: pointer;
+}
+.comment:hover{
+  background-color: #24a7ff;
+  
+}
+.heart:hover{
+  background-color: rgb(223, 79, 79);
+  
+}
+.bookmark:hover{
+  background-color: rgba(245, 245, 105, 0.884);
+  
+}
+.delete:hover{
+  background-color: rgba(255, 0, 0, 0.884);
+  
+}
+.icons-tweet-i{
+  color: white;
+ width: 30px;
+ height: 30px;
+}
+h6{
+  color: white;
+}
+/* //................................................  */
+.card{
+  background-color: rgb(26, 26, 26);
+  border-radius: 10px;
+}
+#commentinput{
+  text-decoration: none;
+  background-color: rgb(26, 26, 26);
+  width: 100%;
+}
+small{
+  color: #ecf0f5;
+  font-size: small;
+}
+em{
+  color: #ecf0f5;
+  font-size: small;
+}
+
+.tweetimg img {
+  width: 400px;
+  height: 400px;
+  object-fit: cover;
+}
+@media (max-width: 767px) {
+  .tweetimg img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+  }
+  em{
+    font-size: 10px;
+  }
+  small{
+    font-size: 8px;
+  }
+  h6{
+    font-size: 11px;
+  }
+  .sidebar-padding {
+    padding: 0px;
+  }
+  .container-fluid {
+    width: 100%;
+  }
+  .btn-createpost {
+    font-size: 10px;
+  }
+  .input-avtar {
+    font-size: 10px;
+    padding: 0px;
+    margin-top: 10px;
+  }
+  .post-btn {
+    padding: 5px 12px;
+    background-color: #1d9bf0;
+    color: white;
+    font-size: 12px;
+    border-radius: 50px;
+    border: none;
+  }
+  h5{
+    font-size: 12px;
+  }
+  p{
+    font-size: 8px;
+    margin-bottom: 0;
+  }
+  .icons-tweet-i{
+    width: 20px;
+    height: 20px;
+  }
+}
