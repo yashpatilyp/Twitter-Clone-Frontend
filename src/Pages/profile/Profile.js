@@ -163,7 +163,7 @@ console.log(profile)
 
 
 const bookmarkedTweets = tweets.filter((tweet) =>
-profile.bookmarks.includes(tweet._id)
+  profile && profile.bookmarks && profile.bookmarks.includes(tweet._id)
 );
 console.log(bookmarkedTweets)
 
