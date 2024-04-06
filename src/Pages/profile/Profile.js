@@ -240,7 +240,7 @@ const bookmarkAndUnbookmark = async (id) => {
       }
         
       </div>
-     <div  className=' profile-h card mt-2 mx-2'>
+     <div  className=' profile-h card mt-3 mx-2'>
      <div>
       <h5>{profile?.name}</h5>
       <em>{profile?.username}</em>

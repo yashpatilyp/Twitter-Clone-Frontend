@@ -30,6 +30,7 @@
       .login-form {
           margin-top: 25px;
           text-align: left;
+          padding: 0px 10px;
       }
       
       input[type=text] {
@@ -96,9 +97,11 @@
       input[placeholder]{
           font-size: 12px;
           padding-left:5px ;
+          padding-top: 5px;
+          padding-bottom: 5px;
       }
       .form-group {
-          margin-bottom: 40px;
+          margin-bottom: 30px;
           outline: 0px;
       }
       
@@ -166,7 +169,10 @@
     font-weight: 600;
 
 }
-
+h2{
+    color: #ECF0F5;
+    font-family: inherit
+}
       @media (max-width: 767px) {
           .login-box {
                     margin-top: 35px;

@@ -3,7 +3,7 @@ import Avatar from 'react-avatar';
 import { AiTwotonePicture } from "react-icons/ai";
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-import { TWEET_API_ENDPOINT } from '../../utils/Constant';
+import { TWEET_API_ENDPOINT, timeSince } from '../../utils/Constant';
 import { getToken } from '../../redux/userSlice';
 import toast from 'react-hot-toast';
 import { getIsActive, getRefresh } from '../../redux/tweetSlice';
@@ -64,18 +64,19 @@ export default function CreatePost() {
 
   //......................................................................
 
-  const fetchUserTweets = async () => {
-    try {
-      const res = await axios.get(`${TWEET_API_ENDPOINT}/getUserTweet/${user?._id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      dispatch(getAllTweets(res.data.tweets));
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const fetchUserTweets = async () => {
+  //   try {
+  //     const res = await axios.get(`${TWEET_API_ENDPOINT}/getUserTweet/${user?._id}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`
+  //       }
+  //     });
+     
+  //     dispatch(getAllTweets(res.data.tweets));
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   
   const forYou = () => {
@@ -86,23 +87,18 @@ export default function CreatePost() {
     dispatch(getIsActive(false));
   };
   
-  const usertweet = () => {
-    fetchUserTweets()
-    // You may want to dispatch an action or perform other logic related to "Yours" tab
-  };
+ 
   
   return (
     <div style={{ position: 'sticky', top: '0',zIndex:"5",backgroundColor:"black"}}>
        <div className='d-flex col'>
-        <div onClick={forYou} className={`col-4 text-center `}>
+        <div onClick={forYou} className={`col-6 text-center `}>
           <button className='w-100 btn-createpost'>For You</button>
         </div>
-        <div onClick={following} className={`col-4 text-center `}>
+        <div onClick={following} className={`col-6 text-center `}>
           <button className='w-100 btn-createpost'>Following</button>
         </div>
-        <div onClick={usertweet} className={`col-4 text-center`}>
-          <button className='w-100 btn-createpost'>Yours</button>
-        </div>
+       
       </div>
 
       <div className='px-2 py-3 d-flex avtar'>
@@ -115,7 +111,7 @@ export default function CreatePost() {
       <div className='d-flex picture-btn p-2'>
         <div>
           <label htmlFor="fileInput" className="fileInputLabel">
-            <AiTwotonePicture className="fileInputIcon" />
+            <AiTwotonePicture className="fileInputIcon" size={"30px"}/>
           </label>
           <input id="fileInput" type="file" className='form-control px-2 mx-2 input-avtar' onChange={handlePictureChange} style={{ display: 'none' }} />
         </div>

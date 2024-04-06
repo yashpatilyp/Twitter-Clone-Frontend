@@ -40,6 +40,7 @@ useEffect(() => {
 }, [tweet, user]);
 
 
+
 const likeOrDislike = async (id) => {
   
   try {
@@ -219,10 +220,7 @@ const toggleLike = async (tweetId, replyId) => {
            {`@${tweet?.userDetails?.username} `}
  
   </Link>    </em>
-    <small className="px-2 "> {tweet &&
-    tweet.userDetails &&
-    tweet.userDetails &&
-    tweet.userDetails?.username &&
+    <small className="px-2 "> {
     timeSince(tweet?.createdAt)}</small>
           </div>
 
@@ -233,7 +231,7 @@ const toggleLike = async (tweetId, replyId) => {
 
         </div>
       </div>
-      <div className="tweetimg" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <div className="tweetimg my-2" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
   {tweet?.picture ? (
     <img src={tweet.picture} alt="tweet"  />
   ) : (
@@ -307,9 +305,9 @@ const toggleLike = async (tweetId, replyId) => {
       <div className="icons-tweet">
         <div className="d-flex">
           <div>
-            <FaRegComment className="comment icons-tweet-i" />{" "}
+           <Link to={`/comment/${reply?._id}`}> <FaRegComment className="comment icons-tweet-i" />{" "}</Link>
           </div>
-          <p className="mt-2">0</p>
+          <p className="mt-2">{reply?.comments.length}</p>
         </div>
         <div className="d-flex">
           <div onClick={() => toggleLike(tweet._id, reply._id)}>

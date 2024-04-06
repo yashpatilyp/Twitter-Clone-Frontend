@@ -49,7 +49,8 @@
 
 .picture-btn {
   display: flex;
-  justify-content: space-between; /* This will push the elements to opposite ends */
+  justify-content: space-between; 
+ margin: 0px  20px;
 }
 
 .picture-btn div {
@@ -209,14 +210,14 @@ em{
     border: none;
   }
   h5{
-    font-size: 12px;
+    font-size: 13px;
   }
   p{
-    font-size: 8px;
+    font-size: 10px;
     margin-bottom: 0;
   }
   .icons-tweet-i{
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
   }
 }

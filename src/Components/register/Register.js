@@ -47,7 +47,7 @@ export default function Register() {
            <div className="col-lg-12 login-title">TWEETER</div>
            <div className="col-lg-12 login-form">
              <div className="col-lg-12 login-form">
-              <h5 className="mx-3">Register</h5>
+              <h2 className="mx-3 ">Register</h2>
                <form className='px-3' onSubmit={register} >
                <div className="form-group">
                    <label className="form-control-label">Full Name</label>
@@ -74,7 +74,7 @@ export default function Register() {
                        SUBMIT
                      </button>
                      <div className='pt-3'>
-                <p>Already have an account? <Link to="/login">Login</Link></p>
+                <h5>Already have an account? <Link to="/login">Login</Link></h5>
                 </div>
                    </div>
                   

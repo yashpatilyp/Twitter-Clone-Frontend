@@ -5,6 +5,7 @@ import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 import Profile from '../../Pages/profile/Profile'
 import Login from '../login/Login'
 import Register from '../register/Register'
+import ReComment from '../../Pages/comment/ReComment'
 
 export default function Body() {
           const appRouter= createBrowserRouter([
@@ -19,7 +20,11 @@ export default function Body() {
                               {
                                         path:"/profile/:id",
                                         element:<Profile/>
-                              }
+                              },
+                              {
+                                path:"/comment/:id",
+                                element:<ReComment/>
+                      }
                           ]    
                     },
                     {

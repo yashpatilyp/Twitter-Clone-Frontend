@@ -1,7 +1,8 @@
 export const USER_API_ENDPOINT="https://twitter-clone-backend-vy81.onrender.com/api/v1/user";
-// export const USER_API_ENDPOINT="http://localhost:5000/api/v1/user";
-
 export const TWEET_API_ENDPOINT="https://twitter-clone-backend-vy81.onrender.com/api/v1/tweet";
+
+
+// export const USER_API_ENDPOINT="http://localhost:5000/api/v1/user";
 // export const TWEET_API_ENDPOINT="http://localhost:5000/api/v1/tweet";
 
 export const timeSince=(timestamp)=> {
@@ -28,3 +29,6 @@ export const timeSince=(timestamp)=> {
                 }
             }
         }
+
+
+        

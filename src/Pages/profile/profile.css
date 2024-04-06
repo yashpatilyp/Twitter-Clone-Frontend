@@ -44,6 +44,7 @@ object-fit: cover;
 .profile-h{
          padding-top: 15px;
          padding-left: 29px;
+         padding-bottom: 10px;
 }
 @media (max-width: 920px) {
           .profile img {

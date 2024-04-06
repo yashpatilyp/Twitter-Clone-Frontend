@@ -54,7 +54,7 @@ const login = async (e) => {
       </div>
       <div className="col-lg-12 login-title">TWEETER</div>
       <div className="col-lg-12 login-form">
-      <h5 className="mx-3">Login</h5>
+      <h2 className="mx-3">Login</h2>
         <div className="col-lg-12 login-form">
           <form className='px-3' onSubmit={login}>
             <div className="form-group">
@@ -75,7 +75,7 @@ const login = async (e) => {
                   LOGIN
                 </button>
                 <div className='pt-3'>
-                <p>Do not have an account? <Link to="/register">Signup</Link></p>
+                <h5>Do not have an account? <Link to="/register">Signup</Link></h5>
                 </div>
               </div>
             </div>
