@@ -307,7 +307,8 @@ const toggleLike = async (tweetId, replyId) => {
           <div>
            <Link to={`/comment/${reply?._id}`}> <FaRegComment className="comment icons-tweet-i" />{" "}</Link>
           </div>
-          <p className="mt-2">{reply?.comments.length}</p>
+          <p className="mt-2">{reply && reply?.comments && reply?.comments?.length}</p>
+
         </div>
         <div className="d-flex">
           <div onClick={() => toggleLike(tweet._id, reply._id)}>
