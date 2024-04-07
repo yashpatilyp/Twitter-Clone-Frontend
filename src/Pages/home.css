@@ -116,6 +116,14 @@ align-items: center;
 padding:3px 5px;
 cursor: pointer;
 }
+.retweet{
+  text-align: center;
+border-radius: 100%;
+justify-content: center;
+align-items: center;
+padding:3px 5px;
+cursor: pointer;
+}
 .delete{
   text-align: center;
 border-radius: 100%;
@@ -125,7 +133,7 @@ padding:3px 5px;
 cursor: pointer;
 }
 .comment:hover{
-  background-color: #24a7ff;
+  background-color: rgba(105, 245, 229, 0.884);
   
 }
 .heart:hover{
@@ -134,6 +142,10 @@ cursor: pointer;
 }
 .bookmark:hover{
   background-color: rgba(245, 245, 105, 0.884);
+  
+}
+.retweet:hover{
+  background-color: rgba(245, 105, 243, 0.884);
   
 }
 .delete:hover{

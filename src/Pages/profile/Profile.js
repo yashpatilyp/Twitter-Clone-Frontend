@@ -12,7 +12,7 @@ import { followingUpdate, getMyProfile, getRefreshForUser, getToken, getUser } f
 import { getRefresh} from '../../redux/tweetSlice'
 import {toast} from 'react-hot-toast'
 import WhoToFollow from '../../Components/home/WhoToFollow/WhoToFollow.js'
-import { FaHeart, FaRegComment, FaRegHeart } from 'react-icons/fa';
+import { FaHeart, FaMapMarkerAlt, FaRegComment, FaRegHeart } from 'react-icons/fa';
 
 export default function Profile() {
 
@@ -242,15 +242,17 @@ const bookmarkAndUnbookmark = async (id) => {
       </div>
      <div  className=' profile-h card mt-3 mx-2'>
      <div>
-      <h5>{profile?.name}</h5>
+      <h5 className='mt-2 mb-0'>{profile?.name}</h5>
       <em>{profile?.username}</em>
       </div>
       <div>
         <p className='mb-0'>{profile?.bio}</p>
         </div>
         <div className=''>
-        <p  className='mb-0'><CiLocationOn /> {profile?.location} </p>
-        <p>DOB : {profile?.dob}</p>
+        {profile?.location && (
+    <p className='mb-0'><FaMapMarkerAlt /> {profile?.location} </p>
+  )}
+  {profile?.dob && <p>DOB: {profile?.dob}</p>}
         </div>
      </div>
    </div>
@@ -279,11 +281,15 @@ const bookmarkAndUnbookmark = async (id) => {
       <div>
       <WhoToFollow/>
       </div>
+      {user?._id===profile?._id && (
       <div>
+         {bookmarkedTweets.length > 0 ? (
+      <>
         <h5 className='mx-3'>Bookmarked Tweets</h5>
       {bookmarkedTweets.map((tweet) => (
        
         <div key={tweet._id} >
+          
           <div className="card mt-2 py-2 mx-2">
          <div className="d-flex">
         <div className="mx-2 mb-0">
@@ -316,19 +322,19 @@ const bookmarkAndUnbookmark = async (id) => {
           <p className="mx-2">
            {tweet?.description}
           </p>
-          <div className="">
-          {tweet?.picture ? (
-  <img src={tweet.picture} alt="tweet" className="" style={{ width: "100%", height: "auto" }} />
-) : (
-  <div >
-  
-  </div>
-)}
-
-            </div>
+         
         </div>
+        
       </div>
-      
+      <div className="tweetimg my-2" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+  {tweet?.picture ? (
+    <img src={tweet.picture} alt="tweet"  />
+  ) : (
+    <div>
+      {/* Placeholder or alternative content when there's no picture */}
+    </div>
+  )}
+</div>
           <div className="icons-tweet">
             <div className=" d-flex ">
               <div>
@@ -359,8 +365,14 @@ const bookmarkAndUnbookmark = async (id) => {
           </div>
         </div>
         </div>
+
       ))}
+       </>
+    ) : (
+     " "
+    )}
     </div>
+      )}
    </div>
   )
 }

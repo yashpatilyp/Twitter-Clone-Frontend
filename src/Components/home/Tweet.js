@@ -3,7 +3,7 @@ import Avatar from "react-avatar";
 import { FaRegComment } from "react-icons/fa";
 
 import { CiBookmark } from "react-icons/ci";
-import { FaHeart } from "react-icons/fa6";
+import { FaHeart, FaRetweet } from "react-icons/fa6";
 import { FaRegHeart } from "react-icons/fa6";
 import { CiLocationArrow1 } from "react-icons/ci";
 import { MdOutlineDeleteOutline } from "react-icons/md";
@@ -196,10 +196,74 @@ const toggleLike = async (tweetId, replyId) => {
   }
 };
 
+ //............................................................................................
+ const [retweetmsg, setRetweetMsg] =useState('')
+ const [countr,setCountR]=useState('')
+ const retweetByTweetId = async(id)=>{
+  try {
+    // Send a request to like or dislike the comment based on its current state
+     const  response=await axios.put(
+      `${TWEET_API_ENDPOINT}/retweet/${id}`,
+      {user_id:user?._id},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
   
+
+    // Refresh the tweet list after liking or disliking a comment
+    dispatch(getRefresh());
+    toast.success(response?.data?.message);
+     setRetweetMsg(response?.data?.username)
+     setCountR(response?.data?.retweetCount)
+  } catch (error) {
+    toast.error(error.response?.data?.message );
+  }
+ }
+
+ //......................
+ const [retweetRmsg, setRetweetRMsg] =useState('')
+ const [countrr,setCountRR]=useState('')
+ const [replyid,setreplyid]=useState('')
+ const retweetByReplyId = async(id)=>{
+  console.log(id)
+  try {
+    // Send a request to like or dislike the comment based on its current state
+     const  response=await axios.put(
+      `${TWEET_API_ENDPOINT}/reply/${id}`,
+      {user_id:user?._id},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+  
+
+    // Refresh the tweet list after liking or disliking a comment
+    dispatch(getRefresh());
+    toast.success(response?.data?.message);
+    setRetweetRMsg(response?.data?.username)
+    setCountRR(response?.data?.retweetCount)
+    setreplyid(response?.data?.replyId)
+  } catch (error) {
+    toast.error(error.response?.data?.message );
+  }
+ }
+ 
   return (
     <div className="card mt-2 py-2">
+     {retweetmsg && (
+  <em className="px-4 mx-4 my-1" style={{color:"#05f2fa"}}>
+   <span className="p-1 "> <FaRetweet/> retweeted by @{retweetmsg}{countr > 0 && <span> and {countr} other</span>}</span>
+  </em>
+)}
       <div className="d-flex">
+      
         <div className="mx-2 mb-0">
         
           <Avatar
@@ -210,6 +274,7 @@ const toggleLike = async (tweetId, replyId) => {
   
         </div>
         <div className="tweet-comp">
+       
           <div className="d-flex items-center ml-2  align-items-center">
           
             <h5 className="m-0 mx-2">
@@ -257,6 +322,14 @@ const toggleLike = async (tweetId, replyId) => {
           </div>{" "}
           <p className="mt-2">{tweet?.like?.length}</p>
         </div>
+       
+        <div className=" d-flex ">
+          <div>
+            {" "}
+            < FaRetweet  className=" retweet icons-tweet-i" onClick={()=>retweetByTweetId(tweet?._id)}  />
+          </div>
+         <p className="mt-2">{tweet?.retweetedBy?.length}</p> 
+        </div>
         <div className=" d-flex ">
           <div>
             {" "}
@@ -288,6 +361,15 @@ const toggleLike = async (tweetId, replyId) => {
       <div className="my-3 mx-2">
   {tweet.replies.map((reply, index) => (
     <div className="card my-1" key={index} style={{ backgroundColor: "black" }}>
+     {retweetRmsg && replyid === reply?._id && (
+  <em className="px-4 mx-4 my-1" style={{ color: "#05f2fa" }}>
+    <span className="p-1">
+      <FaRetweet /> retweeted by @{retweetRmsg}
+      {countrr > 0 && <span> and {countrr} other</span>}
+    </span>
+  </em>
+)}
+
       <div className="reply d-flex align-items-center px-3 py-2">
         <div className="avatar-container d-flex justify-content-center align-items-center">
           <Avatar size='30' src={reply?.profilepicture} round={true} />
@@ -320,6 +402,14 @@ const toggleLike = async (tweetId, replyId) => {
           </div>{" "}
           <p className="mt-2">{reply?.likes.length}</p>
         </div>
+        <div className="d-flex">
+        <div>
+            {" "}
+            < FaRetweet  className=" retweet icons-tweet-i" onClick={()=>retweetByReplyId(reply?._id)}  />
+          </div>
+          <p className="mt-2">{reply?.retweetedBy?.length}</p>
+        </div>
+       
         {
           user?._id === reply?.userId && (
             <div className="d-flex">

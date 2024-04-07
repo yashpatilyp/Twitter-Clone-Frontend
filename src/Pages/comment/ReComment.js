@@ -9,6 +9,7 @@ import {
   FaHeart,
   FaRegComment,
   FaRegHeart,
+  FaRetweet,
 } from "react-icons/fa";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { getToken } from "../../redux/userSlice";
@@ -146,10 +147,12 @@ console.log(id)
             </div>
 
             <div className="d-flex">
-              <div>
-                {/* <MdOutlineDeleteOutline className="delete icons-tweet-i" /> */}
-              </div>
-            </div>
+            <div>
+            {" "}
+            < FaRetweet  className=" retweet icons-tweet-i"   />
+          </div>
+          <p className="mt-2">{reply?.retweetedBy?.length}</p>
+        </div>
           </div>
           <div className="d-flex px-2 ">
        <div><Avatar size="30" src={user?.profilepicture} round={true} /></div> 
