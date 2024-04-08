@@ -9,7 +9,7 @@ import { CiLocationArrow1 } from "react-icons/ci";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { FaArrowRight } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { getToken } from "../../redux/userSlice";
+import { getMyProfile, getToken } from "../../redux/userSlice";
 import { TWEET_API_ENDPOINT, USER_API_ENDPOINT } from "../../utils/Constant";
 import axios from "axios";
 import { getRefresh } from "../../redux/tweetSlice";
@@ -77,7 +77,8 @@ const likeOrDislike = async (id) => {
         }
       );
       dispatch(getRefreshForUser());
-   
+      dispatch(getRefreshForUser());
+      dispatch(getMyProfile(res.data.user));
       toast.success(res.data.message);
     } catch (error) {
       toast.error(error.response.data.message || "server error");
@@ -308,7 +309,7 @@ const toggleLike = async (tweetId, replyId) => {
       <div className="icons-tweet">
         <div className=" d-flex ">
           <div>
-            <FaRegComment className="comment icons-tweet-i"  />{" "}
+            <FaRegComment className="comment icons-tweet-i" style={{cursor:"none"}} />{" "}
           </div>
           <p className="mt-2">{tweet?.replies?.length}</p>
         </div>
@@ -351,7 +352,7 @@ const toggleLike = async (tweetId, replyId) => {
         
       </div>
       <div className="d-flex px-2 ">
-      <Avatar size='30'  src={user?.profilepicture}  round={true} />
+      <div><Avatar size='30'  src={user?.profilepicture}  round={true} /></div>
         <input type="text"className="mb-0 px-3 mx-2" id="commentinput"placeholder="comment" value={commentInput}
   onChange={(e) => setCommentInput(e.target.value)} />
         <div>

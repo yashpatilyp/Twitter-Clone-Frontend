@@ -10,6 +10,7 @@ const useGetProfile = (id) => {
   const tokens = useSelector(getToken);
   const token = tokens?.payload?.user?.token;
   const {refreshin} = useSelector(store=>store.user)
+  const {refresh}=useSelector(store=>store=>store.tweet)
   const fetchMyProfile = async () => {
     try {
       const res = await axios.get(`${USER_API_ENDPOINT}/profile/${id}`, {
@@ -29,7 +30,7 @@ const useGetProfile = (id) => {
     if (token) {
       fetchMyProfile();
     }
-  }, [id,refreshin]); // Added dispatch as dependency
+  }, [id,refreshin,refresh]); // Added dispatch as dependency
 
   return fetchMyProfile; // Return the fetch function
 };

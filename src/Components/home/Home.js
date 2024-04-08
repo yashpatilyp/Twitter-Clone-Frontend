@@ -23,7 +23,7 @@ export default function Home() {
           <div className="row flex-nowrap ">
           <Sidebar/>
          
-          <div className="col px-1">
+          <div className="col px-1 forborder">
      <Outlet/>
     </div>
     </div>

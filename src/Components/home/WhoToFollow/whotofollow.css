@@ -1,6 +1,7 @@
  
 .WhoToFollow{
           padding: 5px;
+         
 }
 .WhoToFollow button{
           background-color: black;
@@ -19,6 +20,7 @@
           padding: 10px;
           border-radius: 5px;
           width: 300px;
+        
           margin-right: auto;
           margin-left: auto;
         }

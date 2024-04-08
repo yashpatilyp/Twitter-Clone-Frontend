@@ -9,6 +9,7 @@
   top: 0;
   height: 100vh; /* Adjust height as needed */
   overflow-y: auto; /* Add scrollbar if content overflows */
+ 
 }
 .sidebar-padding {
   padding: 10px;
@@ -163,7 +164,11 @@ h6{
 /* //................................................  */
 .card{
   background-color: rgb(26, 26, 26);
+  transition: background-color 0.3s ease;
   border-radius: 10px;
+}
+.card:hover{
+  background-color: rgb(44, 42, 42);
 }
 #commentinput{
   text-decoration: none;
@@ -177,6 +182,7 @@ small{
 em{
   color: #ecf0f5;
   font-size: small;
+  
 }
 
 .tweetimg img {

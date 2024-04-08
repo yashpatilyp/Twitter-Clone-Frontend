@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Avatar from 'react-avatar';
 import { IoMdArrowBack } from "react-icons/io";
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,12 +7,12 @@ import { IoMdBookmark } from "react-icons/io";
 import useGetProfile from '../../hooks/useGetProfile';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import { USER_API_ENDPOINT, timeSince } from '../../utils/Constant';
+import { TWEET_API_ENDPOINT, USER_API_ENDPOINT, timeSince } from '../../utils/Constant';
 import { followingUpdate, getMyProfile, getRefreshForUser, getToken, getUser } from '../../redux/userSlice';
-import { getRefresh} from '../../redux/tweetSlice'
+import { getAllTweets, getRefresh} from '../../redux/tweetSlice'
 import {toast} from 'react-hot-toast'
 import WhoToFollow from '../../Components/home/WhoToFollow/WhoToFollow.js'
-import { FaHeart, FaMapMarkerAlt, FaRegComment, FaRegHeart } from 'react-icons/fa';
+import { FaHeart, FaMapMarkerAlt, FaRegComment, FaRegHeart, FaRetweet } from 'react-icons/fa';
 
 export default function Profile() {
 
@@ -158,36 +158,34 @@ const profileId = profile?._id;
 
 const userTweetsCount = tweets.filter(tweet => tweet.userDetails._id === profileId).length;
 
-// console.log('Number of tweets for the user:', userTweetsCount);
+console.log('Number of tweets for the user:', userTweetsCount);
 console.log(profile)
 
 
-const bookmarkedTweets = tweets.filter((tweet) =>
-  profile && profile.bookmarks && profile.bookmarks.includes(tweet._id)
-);
-console.log(bookmarkedTweets)
-
-const bookmarkAndUnbookmark = async (id) => {
-  try {
-    const res = await axios.put(
-      `${USER_API_ENDPOINT}/bookmark/${id}`,
-      { id: user?._id },
-      {
+ //......................................................................
+useEffect(()=>{
+  const fetchUserTweets = async () => {
+    try {
+      const res = await axios.get(`${TWEET_API_ENDPOINT}/getUserTweet/${user?._id}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`
         }
-      }
-    );
-    dispatch(getRefreshForUser());
- 
-    toast.success(res.data.message);
-  } catch (error) {
-    toast.error(error.response.data.message);
-    console.log(error);
-  }
-};
+      });
+     
+      dispatch(getAllTweets(res.data.tweets));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  fetchUserTweets()
+},[])
 
+//.........................................................................................
+
+
+  
   return (
+   <>
    <div className='profile ' >
    <div >
    <div className='d-flex justify-content-between'>
@@ -197,7 +195,10 @@ const bookmarkAndUnbookmark = async (id) => {
     </div>
     <div className='p-2'>
       <div><h5 className='mb-1'>{profile?.name}</h5></div>
-      <div><p>{userTweetsCount} Posts</p></div>
+      {user?._id === profile?._id && (
+  <div><p>{userTweetsCount} Posts</p></div>
+)}
+
     </div>
   </div>
   
@@ -281,98 +282,84 @@ const bookmarkAndUnbookmark = async (id) => {
       <div>
       <WhoToFollow/>
       </div>
-      {user?._id===profile?._id && (
-      <div>
-         {bookmarkedTweets.length > 0 ? (
-      <>
-        <h5 className='mx-3'>Bookmarked Tweets</h5>
-      {bookmarkedTweets.map((tweet) => (
-       
-        <div key={tweet._id} >
-          
-          <div className="card mt-2 py-2 mx-2">
-         <div className="d-flex">
-        <div className="mx-2 mb-0">
-        
-          <Avatar
-            src={tweet?.userDetails?.profilepicture}
-            size="30"
-            round={true}
-          />
-  
-        </div>
-        <div className="tweet-comp">
-          <div className="d-flex items-center ml-2  align-items-center">
-          
-            <h5 className="m-0 mx-2">
-            {tweet?.userDetails?.name}
-              </h5>
-       
-              <em className="m-0 ">   <Link to={`/profile/${tweet?.userDetails?._id} `}style={{color:"white"}}> 
-           {`@${tweet?.userDetails?.username} `}
- 
-   </Link>   </em>
-    <small className="px-2 "> {tweet &&
-    tweet.userDetails &&
-    tweet.userDetails &&
-    tweet.userDetails?.username &&
-    timeSince(tweet?.createdAt)}</small>
-          </div>
-
-          <p className="mx-2">
-           {tweet?.description}
-          </p>
-         
-        </div>
-        
-      </div>
-      <div className="tweetimg my-2" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-  {tweet?.picture ? (
-    <img src={tweet.picture} alt="tweet"  />
-  ) : (
-    <div>
-      {/* Placeholder or alternative content when there's no picture */}
-    </div>
-  )}
-</div>
-          <div className="icons-tweet">
-            <div className=" d-flex ">
-              <div>
-                <FaRegComment className="comment icons-tweet-i" />{" "}
-              </div>
-              <p className="mt-2">{tweet?.replies?.length}</p>
-            </div>
-            <div className=" d-flex ">
-              <div>
-              
-                  <FaHeart
-                    className="heart icons-tweet-i"
-                    style={{ color: "red" }}
-                  />
-            
-                 
-           
-              </div>{" "}
-              <p className="mt-2">{tweet?.like?.length}</p>
-            </div>
-            <div className=" d-flex ">
-              <div>
-                {" "}
-                <IoMdBookmark className=" bookmark icons-tweet-i" color='yellow'onClick={()=>bookmarkAndUnbookmark(tweet?._id)} />
-              </div>
-            </div>
-           
-          </div>
-        </div>
-        </div>
-
-      ))}
-       </>
-    ) : (
-     " "
-    )}
-    </div>
-      )}
+     
    </div>
+   {user?._id===profile?._id && (
+   <div>
+   <h5 className='mx-3 my-3'>Your Tweets :  </h5>  
+   {tweets.map((tweet) => (
+     <div key={tweet._id} className="card mt-2 py-2 mx-2">
+       {/* Render the content of the tweet here */}
+       <div className="d-flex">
+         {/* Avatar */}
+         <div className="mx-2 mb-0">
+           <Avatar src={tweet?.userDetails?.profilepicture} size="30" round={true} />
+         </div>
+         {/* Tweet details */}
+         <div className="tweet-comp">
+           <div className="d-flex items-center ml-2  align-items-center">
+             <h5 className="m-0 mx-2">{tweet?.userDetails?.name}</h5>
+             <em className="m-0 ">
+               <Link to={`/profile/${tweet?.userDetails?._id}`} style={{ color: "white" }}>
+                 @{tweet?.userDetails?.username}
+               </Link>
+             </em>
+             <small className="px-2 ">
+               {tweet &&
+                 tweet.userDetails &&
+                 tweet.userDetails &&
+                 tweet.userDetails?.username &&
+                 timeSince(tweet?.createdAt)}
+             </small>
+           </div>
+           {/* Tweet description */}
+           <p className="mx-2">{tweet?.description}</p>
+         </div>
+       </div>
+       {/* Tweet image */}
+       <div className="tweetimg my-2" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+         {tweet?.picture ? (
+           <img src={tweet.picture} alt="tweet" />
+         ) : (
+           <div>
+             {/* Placeholder or alternative content when there's no picture */}
+           </div>
+         )}
+       </div>
+       {/* Tweet icons */}
+       <div className="icons-tweet">
+         {/* Comment icon */}
+         <div className=" d-flex ">
+           <div>
+             <FaRegComment className="comment icons-tweet-i" style={{ cursor: "none" }} />{" "}
+           </div>
+           <p className="mt-2">{tweet?.replies?.length}</p>
+         </div>
+         {/* Like icon */}
+         <div className=" d-flex ">
+           <div>
+             <FaHeart className="heart icons-tweet-i" style={{ color: "red", cursor: "none" }} />
+           </div>{" "}
+           <p className="mt-2">{tweet?.like?.length}</p>
+         </div>
+         <div className=" d-flex ">
+         <div>
+            {" "}
+            < FaRetweet  className=" retweet icons-tweet-i" style={{  cursor: "none" }}/>
+          </div>
+          <p className="mt-2">{tweet?.retweetedBy?.length}</p>
+          </div>
+         {/* Bookmark icon */}
+         <div className=" d-flex ">
+           <div>
+             <IoMdBookmark className=" bookmark icons-tweet-i" color='yellow' style={{ cursor: "none" }}/>
+           </div>
+         </div>
+       </div>
+     </div>
+   ))}
+ </div>
+    )}</>
+ 
   )
 }

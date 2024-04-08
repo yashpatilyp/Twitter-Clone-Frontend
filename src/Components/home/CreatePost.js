@@ -62,21 +62,7 @@ export default function CreatePost() {
     }
   };
 
-  //......................................................................
-
-  // const fetchUserTweets = async () => {
-  //   try {
-  //     const res = await axios.get(`${TWEET_API_ENDPOINT}/getUserTweet/${user?._id}`, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`
-  //       }
-  //     });
-     
-  //     dispatch(getAllTweets(res.data.tweets));
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+ 
 
   
   const forYou = () => {
@@ -90,39 +76,40 @@ export default function CreatePost() {
  
   
   return (
-    <div style={{ position: 'sticky', top: '0',zIndex:"5",backgroundColor:"black"}}>
-       <div className='d-flex col'>
-        <div onClick={forYou} className={`col-6 text-center `}>
-          <button className='w-100 btn-createpost'>For You</button>
-        </div>
-        <div onClick={following} className={`col-6 text-center `}>
-          <button className='w-100 btn-createpost'>Following</button>
-        </div>
-       
+    <div style={{ position: 'sticky', top: '0', zIndex: "5", backgroundColor: "black" }}>
+   <div className='d-flex col'>
+      <div onClick={forYou} className={`col-6 text-center ${isActive ? 'active' : ''}`}>
+        <button className='w-100 btn-createpost'>For You</button>
+        {isActive && <hr style={{ color: "white" }} />}
       </div>
-
-      <div className='px-2 py-3 d-flex avtar'>
-        <div>
-          <Avatar src={user?.profilepicture} size="30" round={true} />
-        </div>
-        <input value={description} onChange={(e) => setDescription(e.target.value)} type="text" className='form-control px-2 mx-2 input-avtar' placeholder='What is Happening ....!' />
+      <div onClick={following} className={`col-6 text-center ${isActive ? '' : 'active'}`}>
+        <button className='w-100 btn-createpost'>Following</button>
+        {!isActive && <hr style={{ color: "white" }} />}
       </div>
-
-      <div className='d-flex picture-btn p-2'>
-        <div>
-          <label htmlFor="fileInput" className="fileInputLabel">
-            <AiTwotonePicture className="fileInputIcon" size={"30px"}/>
-          </label>
-          <input id="fileInput" type="file" className='form-control px-2 mx-2 input-avtar' onChange={handlePictureChange} style={{ display: 'none' }} />
-        </div>
-        {imagePreview && (
-          <div>
-            <img src={imagePreview} alt="Selected" style={{ maxWidth: '100px' }} />
-          </div>
-        )}
-        <div><button onClick={createTweet} className='post-btn'>Post</button></div>
-      </div>
-      <hr style={{ color: "white" }} />
     </div>
+
+    <div className='px-2 py-3 d-flex avtar'>
+      <div>
+        <Avatar src={user?.profilepicture} size="30" round={true} />
+      </div>
+      <input value={description} onChange={(e) => setDescription(e.target.value)} type="text" className='form-control px-2 mx-2 input-avtar' placeholder='What is Happening ....!' />
+    </div>
+
+    <div className='d-flex picture-btn p-2'>
+      <div>
+        <label htmlFor="fileInput" className="fileInputLabel">
+          <AiTwotonePicture className="fileInputIcon" size={"30px"} />
+        </label>
+        <input id="fileInput" type="file" className='form-control px-2 mx-2 input-avtar' onChange={handlePictureChange} style={{ display: 'none' }} />
+      </div>
+      {imagePreview && (
+        <div>
+          <img src={imagePreview} alt="Selected" style={{ maxWidth: '100px' }} />
+        </div>
+      )}
+      <div><button onClick={createTweet} className='post-btn'>Post</button></div>
+    </div>
+    <hr style={{ color: "white" }} />
+  </div>
   );
 }

@@ -61,7 +61,7 @@ useOtherUsers(user?._id)
         
         {/* Repeat similar structure for other items */}
       </Slider>
-      <hr style={{color:"white"}}/>
+     
     </div>
   );
 }

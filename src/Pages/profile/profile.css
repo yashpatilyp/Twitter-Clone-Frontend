@@ -3,10 +3,7 @@
           height: 250px;
 object-fit: cover;
 }
-.profile{
-      border-left: 1px solid white;
-      border-right: 1px solid white;
-}
+
 .profile-avtar{
           position: absolute;
            top: 100%; 

@@ -18,38 +18,39 @@ const token =(tokens.payload.user.token)
 
 const {refresh,isActive} = useSelector(store=>store.tweet)
 const {refreshin} = useSelector(store=>store.user)
-
 const fetchMyTweets = async () => {
   try {
     const res = await axios.get(`${TWEET_API_ENDPOINT}/getalltweets/${id}`, {
-       //  authentication
+      //  authentication
       headers: {
         Authorization: `Bearer ${token}` // Set the Authorization header with the token
       }
     });
-    dispatch(getAllTweets(res.data.tweets));
 
+  
+
+    dispatch(getAllTweets(res.data.tweets));
   } catch (error) {
     console.log(error);
   }
 };
 
-const followingTweet=async()=>{
-  
+const followingTweet = async () => {
   try {
     const res = await axios.get(`${TWEET_API_ENDPOINT}/getfollwingtweets/${id}`, {
-       //  authentication
+      //  authentication
       headers: {
         Authorization: `Bearer ${token}` // Set the Authorization header with the token
       }
     });
+
+   
+
     dispatch(getAllTweets(res.data.tweets));
-// console.log(res.data.tweets); 
   } catch (error) {
     console.log(error);
   }
-
-}
+};
 
 
 useEffect(() => {

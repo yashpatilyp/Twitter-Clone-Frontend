@@ -130,7 +130,7 @@ console.log(id)
           <div className="icons-tweet">
             <div className="d-flex">
               <div>
-                <FaRegComment className="comment icons-tweet-i" />{" "}
+                <FaRegComment className="comment icons-tweet-i"style={{cursor:"none"}} />{" "}
               </div>
               <p className="mt-2">{reply?.comments.length}</p>
             </div>
@@ -138,7 +138,7 @@ console.log(id)
               <div>
                 <FaHeart
                   className="heart icons-tweet-i"
-                  style={{ color: "red" }}
+                  style={{ color: "red" ,cursor:"none"}}
                 />
 
                 {/* <FaRegHeart className="heart icons-tweet-i" /> */}
@@ -149,7 +149,7 @@ console.log(id)
             <div className="d-flex">
             <div>
             {" "}
-            < FaRetweet  className=" retweet icons-tweet-i"   />
+            < FaRetweet  className=" retweet icons-tweet-i" style={{cursor:"none"}}  />
           </div>
           <p className="mt-2">{reply?.retweetedBy?.length}</p>
         </div>
@@ -191,12 +191,7 @@ console.log(id)
             </div>
           </div>
           <div className="icons-tweet">
-            <div className="d-flex">
-              <div>
-                <FaRegComment className="comment icons-tweet-i" />{" "}
-              </div>
-              <p className="mt-2">{comment?.length}</p>
-            </div>
+           
             <div className="d-flex" onClick={()=>handleLikeClick(comment?._id)}>
       <div>
       {comment.likes.includes(user?._id) ? (
