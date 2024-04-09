@@ -78,6 +78,7 @@ export default function Login() {
                         {loading ? 'Loading...' : 'LOGIN'} {/* Change button text based on loading state */}
                       </button>
                       <div className='pt-3'>
+                        <h5><Link to='/forgot'>Forgot Password..?</Link></h5>
                         <h5>Do not have an account? <Link to="/register">Signup</Link></h5>
                       </div>
                     </div>

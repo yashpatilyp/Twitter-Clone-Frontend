@@ -19,6 +19,9 @@ const userSlice = createSlice({
     getMyProfile: (state, action) => {
       state.profile = action.payload;
     },
+    getProfileTweets: (state, action) => {
+      state.tweets = action.payload;
+    },
     getToken: (state, action) => {
       state.token = action.payload;
     },
@@ -35,5 +38,5 @@ const userSlice = createSlice({
   }
 });
 
-export const { getUser, getOtherUsers, getMyProfile, getToken, followingUpdate, getRefreshForUser } = userSlice.actions;
+export const { getUser, getOtherUsers, getMyProfile, getToken, followingUpdate, getRefreshForUser,getProfileTweets } = userSlice.actions;
 export default userSlice.reducer;

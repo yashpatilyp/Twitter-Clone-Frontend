@@ -7,6 +7,8 @@ import Login from '../login/Login'
 import Register from '../register/Register'
 import ReComment from '../../Pages/comment/ReComment'
 import Bookmark from '../../Pages/bookmark/Bookmark'
+import ForgotPassword from '../login/ForgotPassword'
+import ResetPassword from '../login/ResetPassword'
 
 export default function Body() {
   const appRouter = createBrowserRouter([
@@ -34,6 +36,14 @@ export default function Body() {
     {
       path: "/login",
       element: <Login />
+    },
+    {
+      path: "/forgot",
+      element: <ForgotPassword />
+    },
+    {
+      path: "/reset-password",
+      element: <ResetPassword />
     },
     {
       path: "/register",

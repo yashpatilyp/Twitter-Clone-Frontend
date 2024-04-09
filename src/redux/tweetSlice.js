@@ -16,7 +16,8 @@ const tweetSlice = createSlice({
     },
     getIsActive:(state,action)=>{
       state.isActive= action.payload;
-    }
+    },
+   
   }
 });
 

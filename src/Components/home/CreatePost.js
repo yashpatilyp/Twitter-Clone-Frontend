@@ -76,7 +76,7 @@ export default function CreatePost() {
  
   
   return (
-    <div style={{ position: 'sticky', top: '0', zIndex: "5", backgroundColor: "black" }}>
+    <div className='' style={{ position: 'sticky', top: '0', zIndex: "5", backgroundColor: "black" }}>
    <div className='d-flex col'>
       <div onClick={forYou} className={`col-6 text-center ${isActive ? 'active' : ''}`}>
         <button className='w-100 btn-createpost'>For You</button>
@@ -109,7 +109,7 @@ export default function CreatePost() {
       )}
       <div><button onClick={createTweet} className='post-btn'>Post</button></div>
     </div>
-    <hr style={{ color: "white" }} />
+   
   </div>
   );
 }

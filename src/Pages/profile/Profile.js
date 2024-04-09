@@ -8,16 +8,18 @@ import useGetProfile from '../../hooks/useGetProfile';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { TWEET_API_ENDPOINT, USER_API_ENDPOINT, timeSince } from '../../utils/Constant';
-import { followingUpdate, getMyProfile, getRefreshForUser, getToken, getUser } from '../../redux/userSlice';
+import { followingUpdate, getMyProfile, getProfileTweets, getRefreshForUser, getToken, getUser } from '../../redux/userSlice';
 import { getAllTweets, getRefresh} from '../../redux/tweetSlice'
 import {toast} from 'react-hot-toast'
 import WhoToFollow from '../../Components/home/WhoToFollow/WhoToFollow.js'
 import { FaHeart, FaMapMarkerAlt, FaRegComment, FaRegHeart, FaRetweet } from 'react-icons/fa';
+import { AiTwotonePicture } from 'react-icons/ai';
 
 export default function Profile() {
 
-  const {profile,user} = useSelector(store=>store.user)
-  const {tweets} = useSelector(store=>store.tweet);
+  const {profile,user,tweets} = useSelector(store=>store.user)
+  
+  
   const {id}=useParams();
   // custom hooks
   useGetProfile(id);
@@ -77,6 +79,7 @@ const token =(tokens.payload.user.token)
   const [location, setLocation] = useState(user?.location);
   const [dob, setDob] = useState(user?.dob);
   const [bio,setBio] = useState(user?.bio);
+  const [email,setEmail] = useState(user?.email);
   const [profilepic, setProfilepic] = useState(user?.profilepicture);
   const [cloudinaryUrl, setCloudinaryUrl] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -130,6 +133,7 @@ const token =(tokens.payload.user.token)
         name: name,
         location: location,
         dob: dob,
+        email:email,
         bio:bio,
         profilepicture: imageUrl, // Use the Cloudinary URL
       };
@@ -156,10 +160,12 @@ console.log(updatedProfile)
 
 const profileId = profile?._id;
 
-const userTweetsCount = tweets.filter(tweet => tweet.userDetails._id === profileId).length;
+// Check if tweets is defined before filtering
+const userTweetsCount = tweets ? tweets.filter(tweet => tweet.userDetails._id === profileId).length : 0;
 
 console.log('Number of tweets for the user:', userTweetsCount);
-console.log(profile)
+console.log(profile);
+
 
 
  //......................................................................
@@ -172,7 +178,7 @@ useEffect(()=>{
         }
       });
      
-      dispatch(getAllTweets(res.data.tweets));
+      dispatch(getProfileTweets(res.data.tweets));
     } catch (error) {
       console.log(error);
     }
@@ -182,10 +188,23 @@ useEffect(()=>{
 
 //.........................................................................................
 
-
-  
+const [loading, setLoading] = useState(true);
+  useEffect(() =>{
+    setLoading(false);
+  })
   return (
-   <>
+   <div>
+    {loading ? (
+        // Show spinner while loading
+       <>
+        <div class="spinner">
+        <div class="react1"></div>
+        <div class="react2"></div>
+        <div class="react3"></div>
+        <div class="react4"></div>
+        <div class="react5"></div>
+    </div></>
+      ) : (
    <div className='profile ' >
    <div >
    <div className='d-flex justify-content-between'>
@@ -244,7 +263,7 @@ useEffect(()=>{
      <div  className=' profile-h card mt-3 mx-2'>
      <div>
       <h5 className='mt-2 mb-0'>{profile?.name}</h5>
-      <em>{profile?.username}</em>
+      <em>@{profile?.username}</em>
       </div>
       <div>
         <p className='mb-0'>{profile?.bio}</p>
@@ -267,14 +286,21 @@ useEffect(()=>{
             <input type="text" value={name} onChange={(e)=>setName(e.target.value)}/>
             <label className='form-control-label'>Bio</label>
             <input type="text" value={bio} onChange={(e)=>setBio(e.target.value)}/>
+            <label className='form-control-label'>Email</label>
+            <input type="email" value={email} onChange={(e)=>setEmail(e.target.value)}/>
             <label className='form-control-label'>DOB</label>
             <input type="date" value={dob} onChange={(e)=>setDob(e.target.value)}/>
-            <label className='form-control-label'>Profile Pic</label>
-            <input type="file"  onChange={handleProfilePicUpload} />
-            <img src={selectedImage} alt="" srcset="" width={'100px'} />
+            <div>
+  <label htmlFor="profilePicInput" className="fileInputLabel">
+    <AiTwotonePicture className="fileInputIcon" size={"30px"} />
+  </label>
+  <input id="profilePicInput" type="file" className='form-control px-2 mx-2 input-avtar' onChange={handleProfilePicUpload} style={{ display: 'none' }} />
+</div>
+
+            <img src={selectedImage} alt="" srcset="" style={{width:"100px",height:"100px"}} />
             <label className='form-control-label'>Location</label>
             <input type="text" value={location} onChange={(e)=>setLocation(e.target.value)} />
-            <input type="submit" value="Submit" />
+            <input type="submit" value="Submit" style={{width:'20%',backgroundColor:"black", color:"white", border:"1px solid white"}}/>
           </div>
         </div>
         </form>
@@ -284,42 +310,43 @@ useEffect(()=>{
       </div>
      
    </div>
+    )}
    {user?._id===profile?._id && (
    <div>
    <h5 className='mx-3 my-3'>Your Tweets :  </h5>  
-   {tweets.map((tweet) => (
-     <div key={tweet._id} className="card mt-2 py-2 mx-2">
+   {tweets.map((usertweet) => (
+     <div key={usertweet._id} className="card mt-2 py-2 mx-2">
        {/* Render the content of the tweet here */}
        <div className="d-flex">
          {/* Avatar */}
          <div className="mx-2 mb-0">
-           <Avatar src={tweet?.userDetails?.profilepicture} size="30" round={true} />
+           <Avatar src={usertweet?.userDetails?.profilepicture} size="30" round={true} />
          </div>
          {/* Tweet details */}
          <div className="tweet-comp">
            <div className="d-flex items-center ml-2  align-items-center">
-             <h5 className="m-0 mx-2">{tweet?.userDetails?.name}</h5>
+             <h5 className="m-0 mx-2">{usertweet?.userDetails?.name}</h5>
              <em className="m-0 ">
-               <Link to={`/profile/${tweet?.userDetails?._id}`} style={{ color: "white" }}>
-                 @{tweet?.userDetails?.username}
+               <Link to={`/profile/${usertweet?.userDetails?._id}`} style={{ color: "white" }}>
+                 @{usertweet?.userDetails?.username}
                </Link>
              </em>
              <small className="px-2 ">
-               {tweet &&
-                 tweet.userDetails &&
-                 tweet.userDetails &&
-                 tweet.userDetails?.username &&
-                 timeSince(tweet?.createdAt)}
+               {usertweet &&
+                 usertweet.userDetails &&
+                 usertweet.userDetails &&
+                 usertweet.userDetails?.username &&
+                 timeSince(usertweet?.createdAt)}
              </small>
            </div>
            {/* Tweet description */}
-           <p className="mx-2">{tweet?.description}</p>
+           <p className="mx-2">{usertweet?.description}</p>
          </div>
        </div>
        {/* Tweet image */}
        <div className="tweetimg my-2" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-         {tweet?.picture ? (
-           <img src={tweet.picture} alt="tweet" />
+         {usertweet?.picture ? (
+           <img src={usertweet.picture} alt="tweet" />
          ) : (
            <div>
              {/* Placeholder or alternative content when there's no picture */}
@@ -333,21 +360,21 @@ useEffect(()=>{
            <div>
              <FaRegComment className="comment icons-tweet-i" style={{ cursor: "none" }} />{" "}
            </div>
-           <p className="mt-2">{tweet?.replies?.length}</p>
+           <p className="mt-2">{usertweet?.replies?.length}</p>
          </div>
          {/* Like icon */}
          <div className=" d-flex ">
            <div>
              <FaHeart className="heart icons-tweet-i" style={{ color: "red", cursor: "none" }} />
            </div>{" "}
-           <p className="mt-2">{tweet?.like?.length}</p>
+           <p className="mt-2">{usertweet?.like?.length}</p>
          </div>
          <div className=" d-flex ">
          <div>
             {" "}
             < FaRetweet  className=" retweet icons-tweet-i" style={{  cursor: "none" }}/>
           </div>
-          <p className="mt-2">{tweet?.retweetedBy?.length}</p>
+          <p className="mt-2">{usertweet?.retweetedBy?.length}</p>
           </div>
          {/* Bookmark icon */}
          <div className=" d-flex ">
@@ -359,7 +386,9 @@ useEffect(()=>{
      </div>
    ))}
  </div>
-    )}</>
+ 
+    )}</div>
+    
  
   )
 }
