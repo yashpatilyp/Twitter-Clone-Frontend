@@ -8,6 +8,7 @@ import { getAllTweets } from '../../redux/tweetSlice';
 import axios from 'axios'
 import { CiBookmark } from 'react-icons/ci';
 import { FaBookmark } from 'react-icons/fa';
+import Avatar from 'react-avatar';
 export default function Sidebar() {
   const {user}=useSelector(store=>store.user)
   const dispatch = useDispatch();
@@ -59,7 +60,15 @@ dispatch(getMyProfile(null));
              <span className="fs-6  d-none d-sm-inline ms-2">Logout</span>
            </a>
          </li>
+
+         <li className="nav-item py-2 py-sm-0 position-absolute bottom-0 mx-3">
+      <a href="#" className="nav-link text-white my-2">
+        <Avatar src={user?.profilepicture} size="30" round={true} className='d-none d-sm-inline ms-2' />
+        <span className="fs-6 d-none d-sm-inline ms-2">{user?.name}</span>
+      </a>
+    </li>
        </ul>
+       
        </div>
       </div>
   

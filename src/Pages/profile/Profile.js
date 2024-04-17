@@ -89,18 +89,35 @@ const token =(tokens.payload.user.token)
   };
 
   // Function to handle profile picture upload
-  const handleProfilePicUpload = (e) => {
-    const file = e.target.files[0];
-    setProfilepic(file);
+ const handleProfilePicUpload = (e) => {
+  const file = e.target.files[0];
+  const reader = new FileReader();
 
-    // Convert image to base64 string
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setCloudinaryUrl(reader.result);
-      setSelectedImage(reader.result);
+  reader.onloadend = () => {
+    const image = new Image();
+    image.src = reader.result;
+    image.onload = () => {
+      const width = image.width;
+      const height = image.height;
+      if (width === height) {
+        // Proceed with setting the selected image state or any other actions
+        setSelectedImage(reader.result);
+      } else {
+      
+        alert("Profile picture must be square in shape");
+        // Optionally, clear the selected image state
+        setSelectedImage(null);
+        // Optionally, clear the file input value
+        e.target.value = null;
+      }
     };
-    reader.readAsDataURL(file);
   };
+
+  if (file) {
+    reader.readAsDataURL(file);
+  }
+};
+
 
   const uploadToCloudinary = async (file) => {
     try {
@@ -300,7 +317,7 @@ const [loading, setLoading] = useState(true);
             <img src={selectedImage} alt="" srcset="" style={{width:"100px",height:"100px"}} />
             <label className='form-control-label'>Location</label>
             <input type="text" value={location} onChange={(e)=>setLocation(e.target.value)} />
-            <input type="submit" value="Submit" style={{width:'20%',backgroundColor:"black", color:"white", border:"1px solid white"}}/>
+            <input className='py-1' type="submit" value="Submit" style={{width:'40%',backgroundColor:"black", color:"white", border:"1px solid white" ,marginRight:"auto",marginLeft:"auto"}}/>
           </div>
         </div>
         </form>
